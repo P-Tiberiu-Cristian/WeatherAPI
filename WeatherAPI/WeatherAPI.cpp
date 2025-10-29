@@ -1,14 +1,13 @@
 ﻿#include <iostream>
 #include <string>
 #include <curl/curl.h>
-#include <iomanip>
 using namespace std;
 
-const int NAME_ITERATOR_OFFSET = 6;
-const int DESCRIPTION_ITERATOR_OFFSET = 13;
-const int TEMPERATURE_ITERATOR_OFFSET = 6;
-const int TEMPERATURE_MIN_MAX_ITERATOR_OFFSET = 10;
-const int TEMPERATURE_FEELS_LIKE_ITERATOR_OFFSET = 12;
+CONST int NAME_ITERATOR_OFFSET = 6;
+CONST int DESCRIPTION_ITERATOR_OFFSET = 13;
+CONST int TEMPERATURE_ITERATOR_OFFSET = 6;
+CONST int TEMPERATURE_MIN_MAX_ITERATOR_OFFSET = 10;
+CONST int TEMPERATURE_FEELS_LIKE_ITERATOR_OFFSET = 12;
 CONST string API_KEY = "e806bfd18411d235d782aca8b3ad1035";
 
 // Callback function to write response data to a string
@@ -18,7 +17,7 @@ size_t WriteCallback(void* contents, size_t size, size_t nmemb, string* userp) {
     return totalSize;
 }
 
-void GetCity(string jsonResponse, int offset)
+void GetCityData(string jsonResponse, int offset)
 {
     int name_iterator = jsonResponse.find("name") + offset;
     cout << "City: ";
@@ -31,7 +30,7 @@ void GetCity(string jsonResponse, int offset)
     cout << endl;
 }
 
-void GetTemperature(string jsonResponse, int offset)
+void GetTemperatureData(string jsonResponse, int offset)
 {
     int temperature_iterator = jsonResponse.find("temp") + offset;
     cout << "Actual temperature: ";
@@ -43,7 +42,7 @@ void GetTemperature(string jsonResponse, int offset)
     cout << endl;
 }
 
-void FeelsLikeTemperature(string jsonResponse, int offset)
+void FeelsLikeTemperatureData(string jsonResponse, int offset)
 {
     int feels_like_temperature_iterator = jsonResponse.find("feels_like") + offset;
     cout << "Feels like temperature: ";
@@ -55,7 +54,7 @@ void FeelsLikeTemperature(string jsonResponse, int offset)
     cout << endl;
 }
 
-void GetTemperatureMax(string jsonResponse, int offset)
+void GetTemperatureMaxData(string jsonResponse, int offset)
 {
     int temperature_max_iterator = jsonResponse.find("temp_max") + offset;
     cout << "Max temperature: ";
@@ -67,7 +66,7 @@ void GetTemperatureMax(string jsonResponse, int offset)
     cout << endl;
 }
 
-void GetTemperatureMin(string jsonResponse, int offset)
+void GetTemperatureMinData(string jsonResponse, int offset)
 {
     int temperature_min_iterator = jsonResponse.find("temp_min") + offset;
     cout << "Min temperature: ";
@@ -79,7 +78,7 @@ void GetTemperatureMin(string jsonResponse, int offset)
     cout << endl;
 }
 
-void GetDescription(string jsonResponse, int offset)
+void GetDescriptionData(string jsonResponse, int offset)
 {
     int description_iterator = jsonResponse.find("description") + offset;
     cout << "Description: ";
@@ -122,12 +121,12 @@ void getWeatherData(string& city_name, const string& api_key){
             cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << endl;
         }
         else {
-            GetCity(response, NAME_ITERATOR_OFFSET);
-            GetTemperature(response, TEMPERATURE_ITERATOR_OFFSET);
-            FeelsLikeTemperature(response, TEMPERATURE_FEELS_LIKE_ITERATOR_OFFSET);
-            GetTemperatureMin(response, TEMPERATURE_MIN_MAX_ITERATOR_OFFSET);
-            GetTemperatureMax(response, TEMPERATURE_MIN_MAX_ITERATOR_OFFSET);
-            GetDescription(response, DESCRIPTION_ITERATOR_OFFSET);
+            GetCityData(response, NAME_ITERATOR_OFFSET);
+            GetTemperatureData(response, TEMPERATURE_ITERATOR_OFFSET);
+            FeelsLikeTemperatureData(response, TEMPERATURE_FEELS_LIKE_ITERATOR_OFFSET);
+            GetTemperatureMinData(response, TEMPERATURE_MIN_MAX_ITERATOR_OFFSET);
+            GetTemperatureMaxData(response, TEMPERATURE_MIN_MAX_ITERATOR_OFFSET);
+            GetDescriptionData(response, DESCRIPTION_ITERATOR_OFFSET);
         }
         // Clean up
         curl_easy_cleanup(curl);
@@ -140,6 +139,9 @@ int main() {
     cout << "-----------" << endl;
     cout << "Please enter a city:" << endl;
     getline(cin, city_name);
+    if (int pos = city_name.find(' ')) {
+        city_name.replace(city_name.find(' '), 1, "%20");
+    }
     getWeatherData(city_name, API_KEY);
     cout << endl;
     curl_global_cleanup();
