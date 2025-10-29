@@ -16,6 +16,14 @@ size_t WriteCallback(void* contents, size_t size, size_t nmemb, string* userp) {
     return totalSize;
 }
 
+bool CheckIfCityExits(string& s) {
+    int pos = s.find("city not found");
+    if (pos != string::npos) {
+        return false;
+    }
+    return true;
+}
+
 void GetCityData(string jsonResponse, int offset)
 {
     int name_iterator = jsonResponse.find("name") + offset;
@@ -52,6 +60,7 @@ void FeelsLikeTemperatureData(string jsonResponse, int offset)
     cout << " degrees Celsius";
     cout << endl;
 }
+
 
 void GetDescriptionData(string jsonResponse, int offset)
 {
@@ -93,15 +102,21 @@ void GetWeatherData(string& city_name, const string& api_key){
             cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << endl;
         }
         else {
-            GetCityData(response, NAME_ITERATOR_OFFSET);
-            GetTemperatureData(response, TEMPERATURE_ITERATOR_OFFSET);
-            FeelsLikeTemperatureData(response, TEMPERATURE_FEELS_LIKE_ITERATOR_OFFSET);
-            GetDescriptionData(response, DESCRIPTION_ITERATOR_OFFSET);
+            if (CheckIfCityExits(response)) {
+                GetCityData(response, NAME_ITERATOR_OFFSET);
+                GetTemperatureData(response, TEMPERATURE_ITERATOR_OFFSET);
+                FeelsLikeTemperatureData(response, TEMPERATURE_FEELS_LIKE_ITERATOR_OFFSET);
+                GetDescriptionData(response, DESCRIPTION_ITERATOR_OFFSET);
+            }
+            else
+                cout << "City does not exists";
+            
         }
         // Clean up
         curl_easy_cleanup(curl);
     }
 }
+
 
 void SpaceAsURLEncoded(string& s) {
     int pos = s.find(' ');
@@ -158,6 +173,7 @@ int main() {
             cout << "Invalid option, please try again!" << endl;
         }
     }
+
     curl_global_cleanup();
     return 0;
 }

@@ -1,7 +1,8 @@
 ﻿  WeatherAPI.cpp
-C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\WeatherAPI\WeatherAPI.cpp(21,23): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\WeatherAPI\WeatherAPI.cpp(34,30): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\WeatherAPI\WeatherAPI.cpp(46,41): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\WeatherAPI\WeatherAPI.cpp(58,30): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\WeatherAPI\WeatherAPI.cpp(107,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\WeatherAPI\WeatherAPI.cpp(20,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\WeatherAPI\WeatherAPI.cpp(29,23): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\WeatherAPI\WeatherAPI.cpp(42,30): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\WeatherAPI\WeatherAPI.cpp(54,41): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\WeatherAPI\WeatherAPI.cpp(67,30): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\WeatherAPI\WeatherAPI.cpp(122,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   WeatherAPI.vcxproj -> C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\x64\Debug\WeatherAPI.exe
