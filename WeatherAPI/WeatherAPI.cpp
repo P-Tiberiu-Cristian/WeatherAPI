@@ -3,6 +3,14 @@
 #include <curl/curl.h>
 #include <iomanip>
 using namespace std;
+
+const int NAME_ITERATOR_OFFSET = 6;
+const int DESCRIPTION_ITERATOR_OFFSET = 13;
+const int TEMPERATURE_ITERATOR_OFFSET = 6;
+const int TEMPERATURE_MIN_MAX_ITERATOR_OFFSET = 10;
+const int TEMPERATURE_FEELS_LIKE_ITERATOR_OFFSET = 12;
+CONST string API_KEY = "e806bfd18411d235d782aca8b3ad1035";
+
 // Callback function to write response data to a string
 size_t WriteCallback(void* contents, size_t size, size_t nmemb, string* userp) {
     size_t totalSize = size * nmemb;
@@ -85,32 +93,18 @@ void GetDescription(string jsonResponse, int offset)
     cout << endl;
 }
 
-void callAPI() {
-
-}
-int main() {
+void getWeatherData(string& city_name, const string& api_key){
     CURL* curl;
     CURLcode res;
     string response;
-    string city_name;
-    string api_key = "e806bfd18411d235d782aca8b3ad1035";
-    const int NAME_ITERATOR_OFFSET = 6;
-    const int DESCRIPTION_ITERATOR_OFFSET = 13;
-    const int TEMPERATURE_ITERATOR_OFFSET = 6;
-    const int TEMPERATURE_MIN_MAX_ITERATOR_OFFSET = 10;
-    const int TEMPERATURE_FEELS_LIKE_ITERATOR_OFFSET = 12;
-    cout << "Weather APP" << endl;
-    cout << "-----------"<<endl;
-    cout << "Please enter a city:" << endl;
-    getline(cin, city_name);
-    cout << endl;
+
     // Initialize libcurl
     curl_global_init(CURL_GLOBAL_DEFAULT);
     curl = curl_easy_init();
 
     if (curl) {
         // Set the API URL with parameters (replace with your API key and desired location)
-        string url = "https://api.openweathermap.org/data/2.5/weather?q="+city_name+ "&appid="+api_key+"&units=metric";
+        string url = "https://api.openweathermap.org/data/2.5/weather?q=" + city_name + "&appid=" + api_key + "&units=metric";
 
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
 
@@ -123,8 +117,6 @@ int main() {
 
         // Perform the request
         res = curl_easy_perform(curl);
-        if (res == CURLE_OK)
-            cout << "success";
         // Check for errors
         if (res != CURLE_OK) {
             cerr << "curl_easy_perform() failed: " << curl_easy_strerror(res) << endl;
@@ -135,12 +127,21 @@ int main() {
             FeelsLikeTemperature(response, TEMPERATURE_FEELS_LIKE_ITERATOR_OFFSET);
             GetTemperatureMin(response, TEMPERATURE_MIN_MAX_ITERATOR_OFFSET);
             GetTemperatureMax(response, TEMPERATURE_MIN_MAX_ITERATOR_OFFSET);
-            GetDescription(response, DESCRIPTION_ITERATOR_OFFSET); 
+            GetDescription(response, DESCRIPTION_ITERATOR_OFFSET);
         }
         // Clean up
         curl_easy_cleanup(curl);
     }
+}
+int main() {
 
+    string city_name;
+    cout << "Weather APP" << endl;
+    cout << "-----------" << endl;
+    cout << "Please enter a city:" << endl;
+    getline(cin, city_name);
+    getWeatherData(city_name, API_KEY);
+    cout << endl;
     curl_global_cleanup();
     return 0;
 }
