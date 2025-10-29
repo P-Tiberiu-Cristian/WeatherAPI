@@ -6,7 +6,6 @@ using namespace std;
 CONST int NAME_ITERATOR_OFFSET = 6;
 CONST int DESCRIPTION_ITERATOR_OFFSET = 13;
 CONST int TEMPERATURE_ITERATOR_OFFSET = 6;
-CONST int TEMPERATURE_MIN_MAX_ITERATOR_OFFSET = 10;
 CONST int TEMPERATURE_FEELS_LIKE_ITERATOR_OFFSET = 12;
 CONST string API_KEY = "e806bfd18411d235d782aca8b3ad1035";
 
@@ -54,30 +53,6 @@ void FeelsLikeTemperatureData(string jsonResponse, int offset)
     cout << endl;
 }
 
-void GetTemperatureMaxData(string jsonResponse, int offset)
-{
-    int temperature_max_iterator = jsonResponse.find("temp_max") + offset;
-    cout << "Max temperature: ";
-    while (jsonResponse[temperature_max_iterator] != ',') {
-        cout << jsonResponse[temperature_max_iterator];
-        temperature_max_iterator++;
-    }
-    cout << " degrees Celsius";
-    cout << endl;
-}
-
-void GetTemperatureMinData(string jsonResponse, int offset)
-{
-    int temperature_min_iterator = jsonResponse.find("temp_min") + offset;
-    cout << "Min temperature: ";
-    while (jsonResponse[temperature_min_iterator] != ',') {
-        cout << jsonResponse[temperature_min_iterator];
-        temperature_min_iterator++;
-    }
-    cout << " degrees Celsius";
-    cout << endl;
-}
-
 void GetDescriptionData(string jsonResponse, int offset)
 {
     int description_iterator = jsonResponse.find("description") + offset;
@@ -92,7 +67,7 @@ void GetDescriptionData(string jsonResponse, int offset)
     cout << endl;
 }
 
-void getWeatherData(string& city_name, const string& api_key){
+void GetWeatherData(string& city_name, const string& api_key){
     CURL* curl;
     CURLcode res;
     string response;
@@ -111,9 +86,6 @@ void getWeatherData(string& city_name, const string& api_key){
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
 
-        // Optional: Set a user agent to avoid potential blocks
-        curl_easy_setopt(curl, CURLOPT_USERAGENT, "libcurl-agent/1.0");
-
         // Perform the request
         res = curl_easy_perform(curl);
         // Check for errors
@@ -124,26 +96,68 @@ void getWeatherData(string& city_name, const string& api_key){
             GetCityData(response, NAME_ITERATOR_OFFSET);
             GetTemperatureData(response, TEMPERATURE_ITERATOR_OFFSET);
             FeelsLikeTemperatureData(response, TEMPERATURE_FEELS_LIKE_ITERATOR_OFFSET);
-            GetTemperatureMinData(response, TEMPERATURE_MIN_MAX_ITERATOR_OFFSET);
-            GetTemperatureMaxData(response, TEMPERATURE_MIN_MAX_ITERATOR_OFFSET);
             GetDescriptionData(response, DESCRIPTION_ITERATOR_OFFSET);
         }
         // Clean up
         curl_easy_cleanup(curl);
     }
 }
-int main() {
 
-    string city_name;
-    cout << "Weather APP" << endl;
-    cout << "-----------" << endl;
-    cout << "Please enter a city:" << endl;
-    getline(cin, city_name);
-    if (int pos = city_name.find(' ')) {
-        city_name.replace(city_name.find(' '), 1, "%20");
+void SpaceAsURLEncoded(string& s) {
+    int pos = s.find(' ');
+    if (pos != string::npos) {
+        s.replace(pos, 1, "%20");
     }
-    getWeatherData(city_name, API_KEY);
-    cout << endl;
+}
+
+void ClearConsole() {
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif 
+}
+
+int main() {
+    string city_name;
+    int option;
+
+    while (true) {
+        ClearConsole();
+        cout << "======================" << endl;
+        cout << "     Weather APP      " << endl;
+        cout << "======================" << endl;
+        cout << "1. Check weather" << endl;
+        cout << "2. Exit" << endl;
+        cout << "Choose an option: ";
+        cin >> option;
+
+        // Fix cin issue if invalid input
+        if (cin.fail()) {
+            cin.clear();
+            cout << "Invalid input! Try again.\n";
+            continue;
+        }
+
+        cin.ignore(); // Clear newline from buffer
+
+        if (option == 1) {
+            cout << "Please enter a city: ";
+            getline(cin, city_name);
+            SpaceAsURLEncoded(city_name);
+            GetWeatherData(city_name, API_KEY);
+            cout << endl;
+            cout << "Press ENTER to return to menu...";
+            cin.get();
+        }
+        else if (option == 2) {
+            cout << "Exiting..." << endl;
+            break;
+        }
+        else {
+            cout << "Invalid option, please try again!" << endl;
+        }
+    }
     curl_global_cleanup();
     return 0;
 }

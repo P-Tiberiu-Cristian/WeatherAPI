@@ -1,9 +1,7 @@
 ﻿  WeatherAPI.cpp
-C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\WeatherAPI\WeatherAPI.cpp(22,23): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\WeatherAPI\WeatherAPI.cpp(35,30): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\WeatherAPI\WeatherAPI.cpp(47,41): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\WeatherAPI\WeatherAPI.cpp(59,34): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\WeatherAPI\WeatherAPI.cpp(71,34): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\WeatherAPI\WeatherAPI.cpp(83,30): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\WeatherAPI\WeatherAPI.cpp(142,17): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\WeatherAPI\WeatherAPI.cpp(21,23): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\WeatherAPI\WeatherAPI.cpp(34,30): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\WeatherAPI\WeatherAPI.cpp(46,41): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\WeatherAPI\WeatherAPI.cpp(58,30): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\WeatherAPI\WeatherAPI.cpp(107,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   WeatherAPI.vcxproj -> C:\Users\Tibi\Desktop\ProiectAF\WeatherAPI\x64\Debug\WeatherAPI.exe
