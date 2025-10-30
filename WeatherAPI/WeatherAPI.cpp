@@ -9,13 +9,19 @@ CONST int TEMPERATURE_ITERATOR_OFFSET = 6;
 CONST int TEMPERATURE_FEELS_LIKE_ITERATOR_OFFSET = 12;
 CONST string API_KEY = "e806bfd18411d235d782aca8b3ad1035";
 
-// Callback function to write response data to a string
+
+// =============================
+// Scrie răspunsul primit de la server într-un string
+// =============================
 size_t WriteCallback(void* contents, size_t size, size_t nmemb, string* userp) {
     size_t totalSize = size * nmemb;
     userp->append(static_cast<char*>(contents), totalSize);
     return totalSize;
 }
 
+// =============================
+// Verifică dacă orașul introdus există (dacă API-ul a returnat "city not found")
+// =============================
 bool CheckIfCityExits(string& s) {
     int pos = s.find("city not found");
     if (pos != string::npos) {
@@ -24,6 +30,9 @@ bool CheckIfCityExits(string& s) {
     return true;
 }
 
+// =============================
+// Extrage și afișează numele orașului din răspunsul JSON
+// =============================
 void GetCityData(string jsonResponse, int offset)
 {
     int name_iterator = jsonResponse.find("name") + offset;
@@ -37,6 +46,9 @@ void GetCityData(string jsonResponse, int offset)
     cout << endl;
 }
 
+// =============================
+// Extrage și afișează temperatura actuală din JSON
+// =============================
 void GetTemperatureData(string jsonResponse, int offset)
 {
     int temperature_iterator = jsonResponse.find("temp") + offset;
@@ -49,6 +61,9 @@ void GetTemperatureData(string jsonResponse, int offset)
     cout << endl;
 }
 
+// =============================
+// Extrage și afișează temperatura resimțită ("feels_like")
+// =============================
 void FeelsLikeTemperatureData(string jsonResponse, int offset)
 {
     int feels_like_temperature_iterator = jsonResponse.find("feels_like") + offset;
@@ -61,7 +76,9 @@ void FeelsLikeTemperatureData(string jsonResponse, int offset)
     cout << endl;
 }
 
-
+// =============================
+// Extrage și afișează descrierea condițiilor meteo ("description")
+// =============================
 void GetDescriptionData(string jsonResponse, int offset)
 {
     int description_iterator = jsonResponse.find("description") + offset;
@@ -76,12 +93,15 @@ void GetDescriptionData(string jsonResponse, int offset)
     cout << endl;
 }
 
+// =============================
+// Trimite cererea către API și afișează datele meteo pentru orașul cerut
+// =============================
 void GetWeatherData(string& city_name, const string& api_key){
     CURL* curl;
     CURLcode res;
     string response;
 
-    // Initialize libcurl
+    // Initializare libcurl
     curl_global_init(CURL_GLOBAL_DEFAULT);
     curl = curl_easy_init();
 
@@ -117,7 +137,9 @@ void GetWeatherData(string& city_name, const string& api_key){
     }
 }
 
-
+// =============================
+// Înlocuiește spațiile din numele orașului cu "%20" (pentru URL valid)
+// =============================
 void SpaceAsURLEncoded(string& s) {
     int pos = s.find(' ');
     if (pos != string::npos) {
@@ -125,6 +147,9 @@ void SpaceAsURLEncoded(string& s) {
     }
 }
 
+// =============================
+// Curăță consola (cls pentru Windows, clear pentru Linux/macOS)
+// =============================
 void ClearConsole() {
 #ifdef _WIN32
     system("cls");
